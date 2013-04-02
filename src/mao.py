@@ -1,6 +1,6 @@
 """
 ############################################################
-Quarto - Principal - Base
+Quarto - Mao
 ############################################################
 
 :Author: *Carlo E. T. Oliveira*
@@ -12,5 +12,3 @@ Quarto - Principal - Base
 :Home: `Labase <http://labase.selfip.org/>`__
 :Copyright: 2013, `GPL <http://is.gd/3Udt>`__.
 """
-def main(doc):
-  print('Quarto 0.1.0')
