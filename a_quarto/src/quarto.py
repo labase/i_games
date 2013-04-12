@@ -17,13 +17,14 @@ def main(doc):
 
 class Quarto:
     """Base do jogo com tabuleiro e duas maos."""
-    def __init__(self):
+    def __init__(self, gui):
         """Constroi as partes do Jogo. """
-        self.build_base()
-        self.build_tabuleiro()
-        self.build_mao()
+        self.build_base(gui)
+        #self.build_tabuleiro(gui)
+        #self.build_mao(gui)
         
-    def build_base(self):
+    def build_base(self,gui):
         """docs here"""
+        gui.rect(x=10, y= 10, width=800, heigth=600)
     #: TODO - put all the rest
 
