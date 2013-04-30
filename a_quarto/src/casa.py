@@ -12,3 +12,7 @@ Quarto - Casa
 :Home: `Labase <http://labase.selfip.org/>`__
 :Copyright: 2013, `GPL <http://is.gd/3Udt>`__.
 """
+class Casa:
+    """Casa onde se coloca pecas"""
+    def __init__(self, gui):
+        self.casas = []

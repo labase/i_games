@@ -12,3 +12,12 @@ Quarto - Mao
 :Home: `Labase <http://labase.selfip.org/>`__
 :Copyright: 2013, `GPL <http://is.gd/3Udt>`__.
 """
+from peca import Peca
+class Mao:
+    """Espaco do jogo onde as pecas iniciam"""
+    def __init__(self, gui):
+        
+        self.pecas = []
+        self.build(gui)
+    def build(self, gui):
+        self.pecas = [Peca(gui) for i in range(8)]

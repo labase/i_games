@@ -12,3 +12,7 @@ Quarto - peca
 :Home: `Labase <http://labase.selfip.org/>`__
 :Copyright: 2013, `GPL <http://is.gd/3Udt>`__.
 """
+class Peca:
+    """Peca do jogo"""
+    def __init__(self, gui):
+        pass

@@ -12,6 +12,8 @@ Quarto - Principal - Base
 :Home: `Labase <http://labase.selfip.org/>`__
 :Copyright: 2013, `GPL <http://is.gd/3Udt>`__.
 """
+from tabuleiro import Tabuleiro
+from mao import Mao
 def main(doc):
   print('Quarto 0.1.0')
 
@@ -25,6 +27,13 @@ class Quarto:
         
     def build_base(self,gui):
         """docs here"""
-        gui.rect(x=10, y= 10, width=800, heigth=600)
+        #gui.rect(x=10, y= 10, width=800, heigth=600)
+    def build_tabuleiro(self,gui):
+        """docs here"""
+        self.tabuleiro =Tabuleiro(gui)
+    def build_mao(self,gui):
+        """docs here"""
+        self.mao1 =Mao(gui)
+        #gui.rect(x=10, y= 10, width=800, heigth=600)
     #: TODO - put all the rest
 

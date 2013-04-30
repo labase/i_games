@@ -12,3 +12,12 @@ Quarto - Tabuleiro
 :Home: `Labase <http://labase.selfip.org/>`__
 :Copyright: 2013, `GPL <http://is.gd/3Udt>`__.
 """
+from casa import Casa
+class Tabuleiro:
+    """Campo do jogo onde se joga as pecas"""
+    def __init__(self, gui):
+        
+        self.casas = []
+        self.build(gui)
+    def build(self, gui):
+        self.casas = [Casa(gui) for i in range(16)]
