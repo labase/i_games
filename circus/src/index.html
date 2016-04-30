@@ -9,11 +9,8 @@
         <script type="text/javascript" src="https://cdn.rawgit.com/brython-dev/brython/3.2.6/www/src/brython.js"></script>
         <script type="text/python">
             from circus.main import main
-            from browser import window
-            from javascript import JSConstructor
-            PHASER = window.Phaser
-            Game = JSConstructor(PHASER.Game)
-            main(Game, PHASER)
+            from braser import Braser
+            main(Braser)
         </script>
     </head>
     <body onLoad="brython(1, {static_stdlib_import: true})" class="main">

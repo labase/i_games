@@ -7,16 +7,6 @@ Um tutorial para se programar um game em Python.
 ######
 
 
-<!– md-config columns=2;
- 	prettify=1;
- 	tables_class=table table-stripped;
- 	author=Carlo E. T. Oliveira;
- 	email=carlo@nce.ufrj.br;
- 	gravatar=carlo@nce.ufrj.br;
- 	profile=http://activufrj.nce.ufrj.br/wiki/carlo/home;
- 	date=20016-04-30 00:00:00;
--->
-
 #Visão Global
 
 >Um jogo de aventura que se joga aprendendo e criando programas na linguagem Python.
@@ -37,8 +27,8 @@ Um tutorial para se programar um game em Python.
 |Atividades no Kanban em Waffle.io | [![Stories in Ready](https://badge.waffle.io/labase/i_games.svg?label=ready&title=Ready)](http://waffle.io/labase/i_games)|
 |Integração Contínua em Codeship 	|em construção|
 |  Manual em Read the Docs |	em construção |
-|  Documento de Desenvolvimento |	|
- | Crivo Empírico |	em construção |
+|  Documento de Desenvolvimento | [![Activ](http://activufrj.nce.ufrj.br/static/favicon.ico)](http://activufrj.nce.ufrj.br/wiki/labase/Fly_Assets)	|
+| Crivo Empírico |	em construção |
 |  Crivo Computacional 	|em construção |
 |  Padrões de Gaming |	em construção |
 |  Sumário de Especificação 	|em construção|

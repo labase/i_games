@@ -1,10 +1,54 @@
 from random import random
+# from ..braser import Braser
+
+DETAIL, DETAILURL = "dungeon_detail", "DungeonWall.jpg"
+MONSTER, MONSTERURL = "monster", "monstersheets.png?"
+DETILE = "dungeon_detile"
+
+
+class Masmorra:
+    def __init__(self, gamer):
+        self.gamer = gamer(800, 600, gamer.AUTO, 'flying-circus')
+        self.gamer.subscribe(self)
+        self.game = self.gamer.game
+        self.ph = self.gamer.PHASER
+
+    def preload(self):
+        # self.game.load.image(DETAIL, DETAILURL)
+        self.game.load.spritesheet(MONSTER, MONSTERURL, 64, 63, 16*12)
+        self.game.load.spritesheet(DETILE, DETAILURL, 128, 128, 12)
+
+    def create(self):
+        self.game.physics.startSystem(self.ph.Physics.ARCADE)
+        detail = self.game.add.sprite(0, 0, DETILE)
+        rotate = 0
+        for i in range(6):
+            for j in range(5):
+                detail = self.game.add.sprite(64+i * 128, 64+j * 128, DETILE)
+                detail.anchor.setTo(0.5, 0.5)
+                detail.angle = rotate
+                detail.frame = (6*j+i) % 12
+                rotate += 90
+
+        sprite = self.game.add.sprite(20, 148, MONSTER)
+        # sprite.animations.add('ani', [0, 1, 2, 3, 16+0, 16+1, 16+2, 16+3], 2, True)
+        sprite.animations.add('ani', [0, 1, 2, 3], 4, True)
+        sprite.play('ani')
+
+        sprite = self.game.add.sprite(148, 148, MONSTER)
+        # sprite.animations.add('mon', [7*16+0, 7*16+1, 7*16+2, 7*16+3, 7*16+16 + 0,
+        #                               7*16+16 + 1, 7*16+16 + 2, 7*16+16 + 3], 4, True)
+        sprite.animations.add('mon', [6*16+0, 6*16+1, 6*16+2, 6*16+3], 4, True)
+        sprite.play('mon')
+
+    def update(self):
+        pass
 
 
 class Main:
     def __init__(self, Game, Phaser):
         self.ph = Phaser
-        self.game = Game(800, 600, Phaser.AUTO, 'phaser-example',
+        self.game = Game(800, 600, Phaser.AUTO, 'flying-circus',
                          {"preload": self.preload, "create": self.create, "update": self.update})
         self.player = self.platforms = self.cursors = self.stars = self.scoreText = None
         self.score = 0
@@ -107,5 +151,6 @@ class Main:
         self.game.physics.arcade.overlap(player, stars, collectstar, None, self)
 
 
-def main(Game, auto):
-    Main(Game, auto)
+def main(Game):
+    Masmorra(Game)
+    # Main(Game, auto)
