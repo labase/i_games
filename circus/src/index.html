@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Flying Circus</title>
+        <meta http-equiv="content-type" content="application/xml;charset=utf-8" />
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/phaser/2.4.7/phaser.min.js"></script>
+        <script type="text/javascript" src="https://cdn.rawgit.com/brython-dev/brython/3.2.6/www/src/brython.js"></script>
+        <script type="text/python">
+            from circus.main import main
+            from browser import window
+            from javascript import JSConstructor
+            PHASER = window.Phaser
+            Game = JSConstructor(PHASER.Game)
+            main(Game, PHASER)
+        </script>
+    </head>
+    <body onLoad="brython(1, {static_stdlib_import: true})" class="main">
+        <div id="pydiv"></div>
+    </body>
+</html>
