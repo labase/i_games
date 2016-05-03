@@ -16,12 +16,11 @@ Sumário
 =======
 
 .. toctree::
-   :maxdepth: 2
+    :maxdepth: 2
 
-   inicia.rst
-
-
-
+    inicia.rst
+    desafio_a.rst
+    desafio_b.rst
 
 Indices e Tabelas
 =================
