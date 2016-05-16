@@ -13,10 +13,11 @@ class Braser:
     """
     PHASER = JsPhaser().phaser()
     AUTO = JsPhaser().phaser().AUTO
+    CANVAS = JsPhaser().phaser().CANVAS
     Game = JsPhaser().BraserGame
 
-    def __init__(self, x=800, y=600, mode=None, name="braser", **kwargs):
-        mode = mode or Braser.AUTO
+    def __init__(self, x=800, y=600, mode=None, name="pydiv", **kwargs):
+        mode = mode or Braser.CANVAS
         print(Braser.AUTO, Braser.PHASER)
         self.game = Braser.Game(x, y, mode, name,
                                 {"preload": self.preload, "create": self.create, "update": self.update})
@@ -53,3 +54,7 @@ class Braser:
         """
         for subscriber in self.subscribers:
             subscriber.update()
+
+    @classmethod
+    def cons(cls, constructor):
+        return JsPhaser().construct(constructor)

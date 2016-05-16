@@ -1,25 +1,22 @@
-# from random import random
-from braser import Braser
+from random import random
+# from ..braser import Braser
 
 DETAIL, DETAILURL = "dungeon_detail", "DungeonWall.jpg"
 MONSTER, MONSTERURL = "monster", "monstersheets.png?"
 DETILE = "dungeon_detile"
-FIRE, FIREURL = "fire", "http://s19.postimg.org/z9iojs2c3/magicfire.png"
 
 
 class Masmorra:
-    def __init__(self):
-        self.gamer = Braser(800, 600)
+    def __init__(self, gamer):
+        self.gamer = gamer(800, 600, gamer.AUTO, 'flying-circus')
         self.gamer.subscribe(self)
         self.game = self.gamer.game
         self.ph = self.gamer.PHASER
-        self.monster = Hero(self.gamer)
 
     def preload(self):
         # self.game.load.image(DETAIL, DETAILURL)
         self.game.load.spritesheet(MONSTER, MONSTERURL, 64, 63, 16*12)
         self.game.load.spritesheet(DETILE, DETAILURL, 128, 128, 12)
-        self.game.load.spritesheet(FIRE, FIREURL, 96, 96, 25)
 
     def create(self):
         self.game.physics.startSystem(self.ph.Physics.ARCADE)
@@ -33,6 +30,11 @@ class Masmorra:
                 detail.frame = (6*j+i) % 12
                 rotate += 90
 
+        sprite = self.game.add.sprite(20, 148, MONSTER)
+        # sprite.animations.add('ani', [0, 1, 2, 3, 16+0, 16+1, 16+2, 16+3], 2, True)
+        sprite.animations.add('ani', [0, 1, 2, 3], 4, True)
+        sprite.play('ani')
+
         sprite = self.game.add.sprite(148, 148, MONSTER)
         # sprite.animations.add('mon', [7*16+0, 7*16+1, 7*16+2, 7*16+3, 7*16+16 + 0,
         #                               7*16+16 + 1, 7*16+16 + 2, 7*16+16 + 3], 4, True)
@@ -41,86 +43,6 @@ class Masmorra:
 
     def update(self):
         pass
-
-
-class Hero:
-    def __init__(self, gamer):
-        self.gamer = gamer
-        self.gamer.subscribe(self)
-        self.game = self.gamer.game
-        self.ph = self.gamer.PHASER
-        self.monster = self.cursors = self.moves = None
-
-    def create(self):
-        # self.game.physics.startSystem(self.ph.Physics.ARCADE)
-        sprite = self.game.add.sprite(20, 148, MONSTER)
-        # sprite.animations.add('ani', [0, 1, 2, 3, 16+0, 16+1, 16+2, 16+3], 2, True)
-        sprite.animations.add('ani', [0, 1, 2, 3], 16, True)
-        sprite.play('ani')
-        self.game.physics.arcade.enable(sprite)
-
-        # self.game.physics.p2.enable(sprite, False)
-        sprite.body.setCircle(28)
-        sprite.anchor.setTo(0.5, 0.5)
-        sprite.body.collideWorldBounds = True
-        # sprite.body.fixedRotation = True
-        self.monster = sprite
-        self.cursors = crs = self.game.input.keyboard.createCursorKeys()
-        self.moves = [(crs.left.isDown, 90, (-150, 0)), (crs.right.isDown, 270, (150, 0)),
-                      (crs.up.isDown, 180, (0, -150)), (crs.down.isDown, 0, (0, -150))]
-
-    def preload(self):
-        pass
-
-    def update(self):
-        cursors, player = self.cursors, self.monster
-
-        #  Collide the player and the stars with the platforms
-        # self.game.physics.arcade.collide(self.player, self.platforms)
-
-        player.body.velocity.x, player.body.velocity.y = 0, 0
-        player.animations.play('ani')
-
-        def mover(angle, direction):
-            player.angle = angle
-            player.body.velocity.x, player.body.velocity.y = direction
-            return True
-        # if not [mover(a, d) for condition, a, d in self.moves if condition]:
-        #     player.animations.stop()
-        # return
-
-        for move in self.moves:
-            if move[0]:
-                player.angle = move[1]
-                player.body.velocity.x, player.body.velocity.y = move[2]
-
-        if cursors.left.isDown:
-            #  Move to the left
-            player.angle = 90
-            player.body.velocity.x = -150
-
-            # player.animations.play('ani')
-        elif cursors.right.isDown:
-            #  Move to the right
-            player.angle = 270
-            player.body.velocity.x = 150
-
-            # player.animations.play('ani')
-        elif cursors.up.isDown:
-            #  Move to the left
-            player.angle = 180
-            player.body.velocity.y = -150
-
-            # player.animations.play('ani')
-        elif cursors.down.isDown:
-            #  Move to the right
-            player.angle = 0
-            player.body.velocity.y = 150
-
-            # player.animations.play('ani')
-        else:
-            #  Stand still
-            player.animations.stop()
 
 
 class Main:
@@ -229,10 +151,6 @@ class Main:
         self.game.physics.arcade.overlap(player, stars, collectstar, None, self)
 
 
-def main():
-    Masmorra()
+def main(Game):
+    Masmorra(Game)
     # Main(Game, auto)
-print(__name__)
-if __name__ == "__main__":
-    main()
-main()
