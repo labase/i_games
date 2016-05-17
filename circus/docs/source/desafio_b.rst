@@ -1,21 +1,29 @@
 .. _desafio_b:
 
-Posicionando um Personagem com Inteiros
-=======================================
+Criando uma Câmara com Listas
+=============================
 
-Uma variável é um nome que serve para se referir a um certo valor.
-Em Python a variável é escrita com todas as letras maiúsculas como no nome **um_monstro** abaixo.
+Uma lista é um conjunto de coisas, pode ser um conjunto de números, letras, palavras ou qualquer outro objeto.
+Em Python a lista é escrita assim: *[<uma coisa>, <outra coisa>]*.
 
-escolha um dos monstros de 0 200 e posicione no centro da câmara.
+Use os ladrilhos nomeados de A a L para montar a câmara mostrada abaixo, consulte o exercício anterior.
 
-.. image:: /_static/desafio_a.png
+.. image:: /_static/masmorra.jpg
 
 .. code-block:: python
 
-    um_monstro = 0
-    um_monstro_x = 100
-    um_monstro_y = 100
+    from circus.circus import circus
 
+
+
+    MASMORRA = [[ "AN", "AN", "AN", "AN", "AN", "AN"]
+                [ "AN", "AN", "AN", "AN", "AN", "AN"]
+                [ "AN", "AN", "AN", "AN", "AN", "AN"]
+                [ "AN", "AN", "AN", "AN", "AN", "AN"]
+                [ "AN", "AN", "AN", "AN", "AN", "AN"]
+                ]
+
+    circus(2)
 
 .. moduleauthor:: Carlo Oliveira <carlo@nce.ufrj.br>
 
