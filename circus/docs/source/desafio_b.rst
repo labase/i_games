@@ -14,16 +14,14 @@ Use os ladrilhos nomeados de A a L para montar a câmara mostrada abaixo, consul
 
     from circus.circus import circus
 
-
-
-    MASMORRA = [[ "AN", "AN", "AN", "AN", "AN", "AN"]
-                [ "AN", "AN", "AN", "AN", "AN", "AN"]
-                [ "AN", "AN", "AN", "AN", "AN", "AN"]
-                [ "AN", "AN", "AN", "AN", "AN", "AN"]
+    MASMORRA = [[ "AN", "AN", "AN", "AN", "AN", "AN"],
+                [ "AN", "AN", "AN", "AN", "AN", "AN"],
+                [ "AN", "AN", "AN", "AN", "AN", "AN"],
+                [ "AN", "AN", "AN", "AN", "AN", "AN"],
                 [ "AN", "AN", "AN", "AN", "AN", "AN"]
                 ]
 
-    circus(2)
+    circus(2, MASMORRA)
 
 .. moduleauthor:: Carlo Oliveira <carlo@nce.ufrj.br>
 

@@ -12,12 +12,17 @@ Use os ladrilhos nomeados de A a L para montar a câmara mostrada à direita.
 
 .. code-block:: python
 
+    from circus.circus import circus
+
     TOPO_ESQUERDA = "AN"
     TOPO_DIREITA = "AN"
     TOPO_CENTRO = "AN"
     MEIO_ESQUERDA, CENTRO, MEIO_DIREITA = "AN", "AN", "AN"
     FUNDO_ESQUERDA, FUNDO_CENTRO, FUNDO_DIREITA =  "AN", "AN", "AN"
 
+    # O comando abaixo voce vai entender no próximo desafio
+    circus(1, [[TOPO_ESQUERDA, TOPO_CENTRO, TOPO_DIREITA], [MEIO_ESQUERDA, CENTRO,
+            MEIO_DIREITA], [FUNDO_ESQUERDA, FUNDO_CENTRO, FUNDO_DIREITA]])
 
 .. moduleauthor:: Carlo Oliveira <carlo@nce.ufrj.br>
 

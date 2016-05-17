@@ -21,10 +21,16 @@ MASMORRA = ["LS JN HN HN JN KO".split(),
             "IO FN FN FN FN IL".split(),
             "GS JS HS HS JS GL".split()
             ]
+MASMORRA = [["AN", "AN", "AN", "AN", "AN", "AN"],
+            ["AN", "AN", "AN", "AN", "AN", "AN"],
+            ["AN", "AN", "AN", "AN", "AN", "AN"],
+            ["AN", "AN", "AN", "AN", "AN", "AN"],
+            ["AN", "AN", "AN", "AN", "AN", "AN"]
+            ]
 
 
 class DesafioA:
-    def __init__(self, masmorra):
+    def __init__(self, masmorra=MASMORRA):
         self.masmorra = masmorra
         self.gamer = Braser(768, 640)
         self.gamer.subscribe(self)
@@ -42,7 +48,7 @@ class DesafioA:
         rotate = 0
         style = dict(font="32px Arial", fill="#ff0044", align="center",
                      backgroundColor="#ffff00")
-
+        """ Esta parte gera o gráfico do enunciado
         for i in range(4):
             for j in range(3):
                 detail = self.game.add.sprite(64+i * 132, 64+j * 132, DETILE)
@@ -63,13 +69,12 @@ class DesafioA:
                 text = self.game.add.text(0, 0, "%s" % DIREN[i], style)
                 text.anchor.set(0.5)
                 text.x, text.y = 64+i * 132 + 200, 128*4
-
+        """
         for i, line in enumerate(self.masmorra):
             for j, cell in enumerate(line):
                 detail = self.game.add.sprite(64+j * 128, 64+i * 128, DETILE)
                 detail.anchor.setTo(0.5, 0.5)
                 tile = cell  # MASMORRA[3*j+i]
-                print(cell)
                 detail.frame = ord(tile[0]) - ord("A")
                 detail.angle = 90 * DIREN.index(tile[1])
 
@@ -77,5 +82,5 @@ class DesafioA:
         pass
 
 
-def main():
-    DesafioA()
+def main(masmorra):
+    DesafioA(masmorra)

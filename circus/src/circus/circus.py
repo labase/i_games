@@ -9,6 +9,8 @@ FIRE, FIREURL = "fire", "http://s19.postimg.org/z9iojs2c3/magicfire.png"
 
 
 class Masmorra:
+    _instance = None
+
     def __init__(self):
         self.gamer = Braser(800, 600)
         self.gamer.subscribe(self)
@@ -17,6 +19,16 @@ class Masmorra:
         self.hero = Hero(self.gamer)
         self.monster = Monster(self)
         self.monsters = None
+        self.monster_list = []
+
+    @classmethod
+    def created(cls):
+        cls._instance = Masmorra()
+        cls.created = lambda *_: Masmorra._instance
+        return cls._instance
+
+    def posiciona_monstro(self, m, x, y):
+        self.monster_list.append((m, x, y))
 
     def preload(self):
         # self.game.load.image(DETAIL, DETAILURL)
@@ -148,35 +160,6 @@ class Hero:
                 stopped = False
         if stopped:
             player.animations.stop()
-        """
-        if cursors.left.isDown:
-            #  Move to the left
-            player.angle = 90
-            player.body.velocity.x = -150
-
-            # player.animations.play('ani')
-        elif cursors.right.isDown:
-            #  Move to the right
-            player.angle = 270
-            player.body.velocity.x = 150
-
-            # player.animations.play('ani')
-        elif cursors.up.isDown:
-            #  Move to the left
-            player.angle = 180
-            player.body.velocity.y = -150
-
-            # player.animations.play('ani')
-        elif cursors.down.isDown:
-            #  Move to the right
-            player.angle = 0
-            player.body.velocity.y = 150
-
-            # player.animations.play('ani')
-        else:
-            #  Stand still
-            player.animations.stop()
-        """
 
 
 class Main:
@@ -285,16 +268,31 @@ class Main:
         self.game.physics.arcade.overlap(player, stars, collectstar, None, self)
 
 
+TOPO_ESQUERDA = "LS"
+TOPO_DIREITA = "KO"
+TOPO_CENTRO = "JN"
+MEIO_ESQUERDA, CENTRO, MEIO_DIREITA = "IO", "FN", "IL"
+FUNDO_ESQUERDA, FUNDO_CENTRO, FUNDO_DIREITA = "GS", "JS", "GL"
+
+MASMORRA = [[TOPO_ESQUERDA, TOPO_CENTRO, TOPO_DIREITA], [MEIO_ESQUERDA, CENTRO,
+            MEIO_DIREITA], [FUNDO_ESQUERDA, FUNDO_CENTRO, FUNDO_DIREITA]]
+
+
 def main():
     Masmorra()
     # Main(Game, auto)
-DES = [main, desafio0]
+DES = [main, desafio0, desafio0]
 
 
-def circus(defafio=1):
+def posiciona_monstro(m, x, y):
+    masmorra = Masmorra.created()
+    masmorra.posiciona_monstro(m, x, y)
+
+
+def circus(desafio=1, param=MASMORRA):
     from browser import doc
     # doc["pydiv"].html = PAGE0
-    DES[defafio]()
+    DES[desafio](param)
 
 print(__name__)
 if __name__ == "__main__":
