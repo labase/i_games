@@ -1,4 +1,4 @@
-# from ..braser import Braser
+from braser import Braser
 
 DETAIL, DETAILURL = "dungeon_detail", "DungeonWall.jpg"
 MONSTER, MONSTERURL = "monster", "monstersheets.png?"
@@ -7,18 +7,26 @@ TILEN = "ABCDEFGHIJKLMN"
 DIREN = "NLSO"
 
 TOPO_ESQUERDA = "LS"
-TOPO_DIREITA = "JN"
-TOPO_CENTRO = "KO"
+TOPO_DIREITA = "KO"
+TOPO_CENTRO = "JN"
 MEIO_ESQUERDA, CENTRO, MEIO_DIREITA = "IO", "FN", "IL"
 FUNDO_ESQUERDA, FUNDO_CENTRO, FUNDO_DIREITA = "GS", "JS", "GL"
 
-MASMORRA = [TOPO_ESQUERDA, TOPO_DIREITA, TOPO_CENTRO, MEIO_ESQUERDA, CENTRO,\
-            MEIO_DIREITA, FUNDO_ESQUERDA, FUNDO_CENTRO, FUNDO_DIREITA]
+MASMORRA = [[TOPO_ESQUERDA, TOPO_CENTRO, TOPO_DIREITA], [MEIO_ESQUERDA, CENTRO,
+            MEIO_DIREITA], [FUNDO_ESQUERDA, FUNDO_CENTRO, FUNDO_DIREITA]]
+
+MASMORRA = ["LS JN HN HN JN KO".split(),
+            "IO FN FN FN FN IL".split(),
+            "IO FN FN FN FN IL".split(),
+            "IO FN FN FN FN IL".split(),
+            "GS JS HS HS JS GL".split()
+            ]
 
 
 class DesafioA:
-    def __init__(self, gamer):
-        self.gamer = gamer(920, 600, gamer.AUTO, 'flying-circus')
+    def __init__(self, masmorra):
+        self.masmorra = masmorra
+        self.gamer = Braser(768, 640)
         self.gamer.subscribe(self)
         self.game = self.gamer.game
         self.ph = self.gamer.PHASER
@@ -56,11 +64,12 @@ class DesafioA:
                 text.anchor.set(0.5)
                 text.x, text.y = 64+i * 132 + 200, 128*4
 
-        for i in range(3):
-            for j in range(3):
-                detail = self.game.add.sprite(528+64+i * 128, 64+j * 128, DETILE)
+        for i, line in enumerate(self.masmorra):
+            for j, cell in enumerate(line):
+                detail = self.game.add.sprite(64+j * 128, 64+i * 128, DETILE)
                 detail.anchor.setTo(0.5, 0.5)
-                tile = MASMORRA[3*j+i]
+                tile = cell  # MASMORRA[3*j+i]
+                print(cell)
                 detail.frame = ord(tile[0]) - ord("A")
                 detail.angle = 90 * DIREN.index(tile[1])
 
@@ -68,5 +77,5 @@ class DesafioA:
         pass
 
 
-def main(Game):
-    DesafioA(Game)
+def main():
+    DesafioA()
