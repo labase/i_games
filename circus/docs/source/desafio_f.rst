@@ -1,9 +1,9 @@
-.. _desafio_b:
+.. _desafio_f:
 
 Criando Vários Monstros
 =======================
 
-O comando for caminha em uma lista e executa o conjunto de comandos indicado para cada elemento.
+O comando *for* caminha em uma lista e executa o conjunto de comandos indicado para cada elemento.
 Em Python o for é escrito assim: *for <elemento> in <lista>:*.
 Se cada elemento da lista for outra lista, você pode colocar vários elementos separados por vírgualas, veja:
 
@@ -12,19 +12,17 @@ Se cada elemento da lista for outra lista, você pode colocar vários elementos 
 Complete a lista de elementos com coordenadas para diversos monstros
  e chame a função *posiciona_monstro()* para cada um deles.
 
-.. image:: /_static/masmorra.jpg
-
 .. code-block:: python
 
     from circus.circus import posiciona_monstro
 
-    lista_de_posições = [(0,0), (<>), <>]
+    # lista_de_posições = [(0, 0, 0), (<>), <>]
 
-    for <> :
-        <>
+    # for <> :
+    #     <>
 
- .. moduleauthor:: Carlo Oliveira <carlo@nce.ufrj.br>
+.. moduleauthor:: Carlo Oliveira <carlo@nce.ufrj.br>
 
 .. note::
 
-    No texto "AN" a primeira letra determina o ladriho e a segunda se está girada para Norte, Leste, Sul ou Oeste.
+    Na tripla ordenada (0, 1, 2) o 0 serve para usar a figura de monstro 0, o 1 para colocar o monstro na posição x=1 e o 2 na posição y=2.

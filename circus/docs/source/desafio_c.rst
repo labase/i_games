@@ -1,4 +1,4 @@
-.. _desafio_b:
+.. _desafio_c:
 
 Posicionando um Personagem com Inteiros
 =======================================
