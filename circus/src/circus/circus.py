@@ -6,6 +6,7 @@ DETAIL, DETAILURL = "dungeon_detail", "DungeonWall.jpg"
 MONSTER, MONSTERURL = "monster", "monstersheets.png?"
 DETILE = "dungeon_detile"
 FIRE, FIREURL = "fire", "http://s19.postimg.org/z9iojs2c3/magicfire.png"
+MOVES = {0: (0, 150), 90: (-150, 0), 180: (0, -150), 270: (150, 0)}
 
 
 class Masmorra:
@@ -18,7 +19,7 @@ class Masmorra:
         self.ph = self.gamer.PHASER
         self.hero = Hero(self.gamer)
         self.monster = Monster(self)
-        self.monsters = None
+        self.monsters = self.magic = None
         self.monster_list = []
 
     @classmethod
@@ -49,13 +50,23 @@ class Masmorra:
                 rotate += 90
 
         self.monsters = self.game.add.group()
+        self.magic = self.game.add.group()
         self.monsters.enableBody = True
+        self.magic.enableBody = True
+        self.magic.checkWorldBounds = True
+        self.magic.outOfBoundsKill = True
 
     def update(self):
         def kill(_, monster):
             monster.kill()
 
+        def killall(magic, monster):
+            magic.kill()
+            monster.kill()
+
         self.game.physics.arcade.overlap(self.hero.monster, self.monster.monster, kill, None, self)
+        self.game.physics.arcade.overlap(self.magic, self.monsters, killall, None, self)
+        self.game.physics.arcade.overlap(self.magic, self.hero.monster, killall, None, self)
 
 
 class Monster:
@@ -107,6 +118,39 @@ class Monster:
             player.animations.stop()
 
 
+class Magic:
+    def __init__(self, masmorra, x, y, d):
+        self.masmorra, self.x, self.y, self.d = masmorra, x, y, d
+        masmorra.gamer.subscribe(self)
+        self.game = masmorra.gamer.game
+        self.monster = self.cursors = self.moves = None
+        self.direction = [0] * 4
+
+    def create(self):
+
+        sprite = self.game.add.sprite(self.x, self.y, FIRE)
+        sprite.animations.add('fire', [10, 11, 12, 13, 14], 4, True)
+        sprite.play('fire')
+        self.game.physics.arcade.enable(sprite)
+
+        # self.game.physics.p2.enable(sprite, False)
+        sprite.body.setCircle(28)
+        sprite.anchor.setTo(0.5, 0.5)
+        sprite.body.collideWorldBounds = True
+        # sprite.body.fixedRotation = True
+        self.masmorra.magic.add(sprite)
+        self.monster = sprite
+        player = self.monster
+        player.body.velocity.x, player.body.velocity.y = MOVES[self.d]
+        player.angle = self.d
+
+    def preload(self):
+        pass
+
+    def update(self):
+        pass
+
+
 class Hero:
     def __init__(self, gamer):
         self.gamer = gamer
@@ -145,13 +189,6 @@ class Hero:
         moves = [(crs.left.isDown, 90, (-150, 0)), (crs.right.isDown, 270, (150, 0)),
                  (crs.up.isDown, 180, (0, -150)), (crs.down.isDown, 0, (0, 150))]
 
-        # def mover(angle, direction):
-        #     player.angle = angle
-        #     player.body.velocity.x, player.body.velocity.y = direction
-        #     return True
-        # if not [mover(a, d) for condition, a, d in moves if condition]:
-        #     player.animations.stop()
-        # return
         stopped = True
         for move in moves:
             if move[0]:
