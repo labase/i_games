@@ -1,4 +1,4 @@
-from circus.circus import posiciona_monstro
+from circus.circus import circus
 
 circus(0)
 '''
