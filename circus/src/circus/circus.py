@@ -77,11 +77,8 @@ class Monster:
         masmorra.gamer.subscribe(self)
         self.game = masmorra.gamer.game
         self.monster = self.cursors = self.moves = None
-        self.direction = int(random()*8.0)
-
-    def dispara(self, x, y, d):
-        # self.magic.add(Magic(self, x, y, d).monster)
-        Magic(self.masmorra, x, y, d)
+        self.direction = 0
+        self.xy = (0, 0)
 
     def create(self):
 
@@ -105,29 +102,17 @@ class Monster:
 
     def update(self):
         def rd():
-            if int(random() + 0.005):
+            x, y = self.xy
+            if self.monster.alive and int(random() + 0.02):
                 self.direction = d = int(random()*8.0)
                 x, y = player.body.position.x, player.body.position.y
-                self.dispara(x, y, (d*45+270) % 360)
-                x, y = DIR[d]
+                Magic(self.masmorra, x, y, (d*45+270) % 360)
+                x, y = self.xy = DIR[d]
             return x*150, y*150
         player = self.monster
         player.angle = (self.direction*45+270) % 360
         player.body.velocity.x, player.body.velocity.y = rd()
         player.animations.play('mon')
-        return
-        moves = [(rd(0), 90, -150, 0), (rd(1), 270, 150, 0),
-                 (rd(2), 180, 0, -150), (rd(3), 0, 0, 150)]
-
-        stopped = True
-        for move in moves:
-            if move[0]:
-                player.angle = move[1]
-                player.body.velocity.x += move[2]
-                player.body.velocity.y += move[3]
-                stopped = False
-        if stopped:
-            player.animations.stop()
 
 
 class Magic:
@@ -136,7 +121,7 @@ class Magic:
         masmorra.gamer.subscribe(self)
         self.game = masmorra.gamer.game
         self.monster = self.cursors = self.moves = None
-        print ("Magic", x, y, d)
+        print("Magic", x, y, d)
         self._create = self.create
 
     def kill(self):
@@ -151,13 +136,13 @@ class Magic:
         sprite.play('fire')
         sprite.scale.setTo(0.5, 0.5)
 
-        print ("Magicspriteanimations", self.x, self.y, self.d)
+        print("Magicspriteanimations", self.x, self.y, self.d)
         self.game.physics.arcade.enable(sprite)
 
         # self.game.physics.p2.enable(sprite, False)
         sprite.body.setCircle(28)
         sprite.anchor.setTo(0.5, 0.5)
-        #sprite.body.collideWorldBounds = True
+        # sprite.body.collideWorldBounds = True
         sprite.outOfBoundsKill = True
         # sprite.body.fixedRotation = True
         self.masmorra.magic.add(sprite)
@@ -339,7 +324,7 @@ MASMORRA = [[TOPO_ESQUERDA, TOPO_CENTRO, TOPO_DIREITA], [MEIO_ESQUERDA, CENTRO,
             MEIO_DIREITA], [FUNDO_ESQUERDA, FUNDO_CENTRO, FUNDO_DIREITA]]
 
 
-def main(_):
+def main(_=None):
     Masmorra()
     # Main(Game, auto)
 DES = [main, desafio0, desafio0]
