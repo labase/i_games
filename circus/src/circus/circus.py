@@ -67,7 +67,7 @@ class Masmorra:
             monster.kill()
 
         self.game.physics.arcade.overlap(self.hero.monster, self.monster.monster, kill, None, self)
-        self.game.physics.arcade.overlap(self.magic, self.monsters, killall, None, self)
+        # self.game.physics.arcade.overlap(self.magic, self.monsters, killall, None, self)
         self.game.physics.arcade.overlap(self.magic, self.hero.monster, killall, None, self)
 
 
@@ -93,6 +93,7 @@ class Monster:
         sprite.body.setCircle(28)
         sprite.anchor.setTo(0.5, 0.5)
         sprite.body.collideWorldBounds = True
+        sprite.body.bounce.setTo(1, 1)
         # sprite.body.fixedRotation = True
         self.masmorra.monsters.add(sprite)
         self.monster = sprite
@@ -101,23 +102,26 @@ class Monster:
         pass
 
     def update(self):
-        def rd():
+        def rd(play, dd):
             x, y = self.xy
+            vx, vy = play.body.velocity.x, play.body.velocity.y
             if self.monster.alive and int(random() + 0.02):
                 self.direction = d = int(random()*8.0)
                 x, y = player.body.position.x, player.body.position.y
-                Magic(self.masmorra, x, y, (d*45+270) % 360)
+                if vx or vy:
+                    Magic(self.masmorra, x+30, y+30, vx, vy, (dd*45+180) % 360)
                 x, y = self.xy = DIR[d]
             return x*150, y*150
         player = self.monster
         player.angle = (self.direction*45+270) % 360
-        player.body.velocity.x, player.body.velocity.y = rd()
+        player.body.velocity.x, player.body.velocity.y = rd(player, self.direction)
         player.animations.play('mon')
 
 
 class Magic:
-    def __init__(self, masmorra, x, y, d):
+    def __init__(self, masmorra, x, y, vx, vy, d):
         self.masmorra, self.x, self.y, self.d = masmorra, x, y, d
+        self.v = vx * 1.5, vy * 1.5
         masmorra.gamer.subscribe(self)
         self.game = masmorra.gamer.game
         self.monster = self.cursors = self.moves = None
@@ -136,19 +140,19 @@ class Magic:
         sprite.play('fire')
         sprite.scale.setTo(0.5, 0.5)
 
-        print("Magicspriteanimations", self.x, self.y, self.d)
+        print("Magicspriteanimations", self.x, self.y, self.v, self.d)
         self.game.physics.arcade.enable(sprite)
 
         # self.game.physics.p2.enable(sprite, False)
         sprite.body.setCircle(28)
         sprite.anchor.setTo(0.5, 0.5)
         # sprite.body.collideWorldBounds = True
-        sprite.outOfBoundsKill = True
+        # sprite.outOfBoundsKill = True
         # sprite.body.fixedRotation = True
         self.masmorra.magic.add(sprite)
         self.monster = sprite
         player = self.monster
-        player.body.velocity.x, player.body.velocity.y = MOVES[self.d]
+        player.body.velocity.x, player.body.velocity.y = self.v
         player.angle = self.d
         self._create = self.kill
 
