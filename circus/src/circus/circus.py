@@ -8,7 +8,7 @@ DETILE = "dungeon_detile"
 FIRE, FIREURL = "fire", "http://s19.postimg.org/z9iojs2c3/magicfire.png"
 FSP = 1.5
 MOVES = {0: (0, FSP*150), 90: (FSP*-150, 0), 180: (0, FSP*-150), 270: (FSP*150, 0)}
-DIR = [(1, 0), (1, 1), (0, 1), (-1, 1), (-1, 0), (-1, -1), (0, -1), (1, -1) ]
+DIR = [(1, 0), (1, 1), (0, 1), (-1, 1), (-1, 0), (-1, -1), (0, -1), (1, -1)]
 
 
 class Masmorra:
@@ -20,7 +20,7 @@ class Masmorra:
         self.game = self.gamer.game
         self.ph = self.gamer.PHASER
         self.hero = Hero(self.gamer)
-        self.monster = Monster(self)
+        self.sprite = Monster(self)
         self.monsters = self.magic = None
         self.monster_list = []
 
@@ -66,9 +66,9 @@ class Masmorra:
             magic.kill()
             monster.kill()
 
-        self.game.physics.arcade.overlap(self.hero.monster, self.monster.monster, kill, None, self)
+        self.game.physics.arcade.overlap(self.hero.sprite, self.sprite.sprite, kill, None, self)
         # self.game.physics.arcade.overlap(self.magic, self.monsters, killall, None, self)
-        self.game.physics.arcade.overlap(self.magic, self.hero.monster, killall, None, self)
+        self.game.physics.arcade.overlap(self.magic, self.hero.sprite, killall, None, self)
 
 
 class Monster:
@@ -76,7 +76,7 @@ class Monster:
         self.masmorra = masmorra
         masmorra.gamer.subscribe(self)
         self.game = masmorra.gamer.game
-        self.monster = self.cursors = self.moves = None
+        self.sprite = self.cursors = self.moves = None
         self.direction = 0
         self.xy = (0, 0)
 
@@ -96,7 +96,7 @@ class Monster:
         sprite.body.bounce.setTo(1, 1)
         # sprite.body.fixedRotation = True
         self.masmorra.monsters.add(sprite)
-        self.monster = sprite
+        self.sprite = sprite
 
     def preload(self):
         pass
@@ -105,14 +105,14 @@ class Monster:
         def rd(play, dd):
             x, y = self.xy
             vx, vy = play.body.velocity.x, play.body.velocity.y
-            if self.monster.alive and int(random() + 0.02):
+            if self.sprite.alive and int(random() + 0.02):
                 self.direction = d = int(random()*8.0)
                 x, y = player.body.position.x, player.body.position.y
                 if vx or vy:
                     Magic(self.masmorra, x+30, y+30, vx, vy, (dd*45+180) % 360)
                 x, y = self.xy = DIR[d]
             return x*150, y*150
-        player = self.monster
+        player = self.sprite
         player.angle = (self.direction*45+270) % 360
         player.body.velocity.x, player.body.velocity.y = rd(player, self.direction)
         player.animations.play('mon')
@@ -124,14 +124,14 @@ class Magic:
         self.v = vx * 1.5, vy * 1.5
         masmorra.gamer.subscribe(self)
         self.game = masmorra.gamer.game
-        self.monster = self.cursors = self.moves = None
+        self.sprite = self.cursors = self.moves = None
         print("Magic", x, y, d)
         self._create = self.create
 
     def kill(self):
-        if not self.monster.inWorld:
+        if not self.sprite.inWorld:
             print("kill")
-            self.monster.alive = False
+            self.sprite.alive = False
 
     def create(self):
 
@@ -150,8 +150,8 @@ class Magic:
         # sprite.outOfBoundsKill = True
         # sprite.body.fixedRotation = True
         self.masmorra.magic.add(sprite)
-        self.monster = sprite
-        player = self.monster
+        self.sprite = sprite
+        player = self.sprite
         player.body.velocity.x, player.body.velocity.y = self.v
         player.angle = self.d
         self._create = self.kill
@@ -170,7 +170,7 @@ class Hero:
         self.gamer.subscribe(self)
         self.game = self.gamer.game
         self.ph = self.gamer.PHASER
-        self.monster = self.cursors = self.moves = None
+        self.sprite = self.cursors = self.moves = None
 
     def create(self):
         # self.game.physics.startSystem(self.ph.Physics.ARCADE)
@@ -185,14 +185,14 @@ class Hero:
         sprite.anchor.setTo(0.5, 0.5)
         sprite.body.collideWorldBounds = True
         # sprite.body.fixedRotation = True
-        self.monster = sprite
+        self.sprite = sprite
         self.cursors = crs = self.game.input.keyboard.createCursorKeys()
 
     def preload(self):
         pass
 
     def update(self):
-        crs, player = self.cursors, self.monster
+        crs, player = self.cursors, self.sprite
 
         #  Collide the player and the stars with the platforms
         # self.game.physics.arcade.collide(self.player, self.platforms)
@@ -351,7 +351,8 @@ if __name__ == "__main__":
 
 PAGE0 = '''
   <div class="section" id="bem-vindos-ao-circo-voador-da-programacao-python">
-<h1>Bem Vindos ao Circo Voador da Programação Python<a class="headerlink" href="#bem-vindos-ao-circo-voador-da-programacao-python" title="Permalink to this headline">¶</a></h1>
+<h1>Bem Vindos ao Circo Voador da Programação Python<a class="headerlink"
+href="#bem-vindos-ao-circo-voador-da-programacao-python" title="Permalink to this headline">¶</a></h1>
 <p>Aqui vamos ter uma introdução rápida de como programar jogos para Web usando Python.
 Na verdade vamos usar o Brython que é o Python que funciona dentro de um navegador web como o Firefox.</p>
 <img alt="http://s19.postimg.org/ufgi8eztf/PPFC.jpg" src="http://s19.postimg.org/ufgi8eztf/PPFC.jpg" />
@@ -362,7 +363,8 @@ Na verdade vamos usar o Brython que é o Python que funciona dentro de um navega
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="inicia.html">Primeiro Cenário do Jogo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="desafio_a.html">Criando uma Câmara com Constantes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="desafio_b.html">Posicionando um Personagem com Inteiros</a></li>
+<li class="toctree-l1"><a class="reference internal" href="desafio_b.html">Posicionando um Personagem com Inteiros</a>
+</li>
 </ul>
 </div>
 </div>
