@@ -13,7 +13,7 @@ Descubra quais posições os nomes misteriosos indicam.
 
 .. code-block:: python
 
-    from circus.circus import circus
+    from _spy.circus.circus import circus
 
     MASMORRA = {'Cahuitz': 'AN', 'Cauha': 'AN', 'Coycol': 'AN',
      'Huatlya': 'AN', 'Micpe': 'AN', 'Nenea': 'AN',
