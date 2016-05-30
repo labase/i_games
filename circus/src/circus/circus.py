@@ -18,7 +18,7 @@ class Masmorra:
         self.gamer = Braser(800, 600)
         self.gamer.subscribe(self)
         self.game = self.gamer.game
-        self.hero = Hero(self.gamer)
+        self.hero = Hero(self)
         self.sprite = Monster(self)
         self.monsters = self.magic = None
         self.monster_list = []
@@ -74,9 +74,9 @@ class Monster:
         self.masmorra = masmorra
         masmorra.gamer.subscribe(self)
         self.game = masmorra.gamer.game
-        self.sprite = self.cursors = self.moves = None
+        self.sprite = None
         self.direction = 0
-        self.xy = (0, 0)
+        self.first = True
 
     def create(self):
 
@@ -95,20 +95,21 @@ class Monster:
         pass
 
     def update(self):
-        def rd(play, dd):
-            x, y = self.xy
-            vx, vy = play.body.velocity.x, play.body.velocity.y
-            if self.sprite.alive and int(random() + 0.02):
-                self.direction = d = int(random()*8.0)
-                x, y = player.body.position.x, player.body.position.y
-                if vx or vy:
-                    Magic(self.masmorra, x+30, y+30, vx, vy, (dd*45+180) % 360)
-                x, y = self.xy = DIR[d]
-            return x*150, y*150
         player = self.sprite
         player.angle = (self.direction*45+270) % 360
-        player.body.velocity.x, player.body.velocity.y = rd(player, self.direction)
+        if self.sprite.alive and int(random() + 0.02) or self.first:
+            player.body.velocity.x, player.body.velocity.y = self.redirect(player, self.direction)
         player.animations.play('mon')
+
+    def redirect(self, play, dd):
+        self.first = False
+        vx, vy = DIR[dd]
+        self.direction = d = int(random() * 8.0)
+        x, y = play.body.position.x, play.body.position.y
+        if vx or vy:
+            Magic(self.masmorra, x + 30, y + 30, vx * 150, vy * 150, (dd * 45 + 180) % 360)
+        x, y = DIR[d]
+        return x * 150, y * 150
 
 
 class Magic:
@@ -117,7 +118,7 @@ class Magic:
         self.v = vx * 1.5, vy * 1.5
         masmorra.gamer.subscribe(self)
         self.game = masmorra.gamer.game
-        self.sprite = self.cursors = self.moves = None
+        self.sprite = None
         self._create = self.create
 
     def kill(self):
@@ -150,10 +151,10 @@ class Magic:
 
 class Hero:
     def __init__(self, gamer):
-        self.gamer = gamer
+        self.gamer = gamer.gamer
         self.gamer.subscribe(self)
         self.game = self.gamer.game
-        self.sprite = self.cursors = self.moves = None
+        self.sprite = self.cursors = None
 
     def create(self):
         sprite = self.game.add.sprite(20, 148, MONSTER)
