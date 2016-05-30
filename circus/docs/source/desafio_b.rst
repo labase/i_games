@@ -12,7 +12,7 @@ Use os ladrilhos nomeados de A a L para montar a câmara mostrada abaixo, consul
 
 .. code-block:: python
 
-    from circus.circus import circus
+    from _spy.circus.circus import circus
 
     MASMORRA = [[ "AN", "AN", "AN", "AN", "AN", "AN"],
                 [ "AN", "AN", "AN", "AN", "AN", "AN"],

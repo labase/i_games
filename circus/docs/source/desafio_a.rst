@@ -12,7 +12,7 @@ Use os ladrilhos nomeados de A a L para montar a câmara mostrada à direita.
 
 .. code-block:: python
 
-    from circus.circus import circus
+    from _spy.circus.circus import circus
 
     TOPO_ESQUERDA = "AN"
     TOPO_DIREITA = "AN"

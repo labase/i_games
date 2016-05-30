@@ -1,5 +1,6 @@
 from random import random
 from braser import Braser
+# noinspection PyUnresolvedReferences
 from circus.desafio_a import main as desafio0
 
 DETAIL, DETAILURL = "dungeon_detail", "DungeonWall.jpg"
@@ -195,11 +196,28 @@ FUNDO_ESQUERDA, FUNDO_CENTRO, FUNDO_DIREITA = "GS", "JS", "GL"
 
 MASMORRA = [[TOPO_ESQUERDA, TOPO_CENTRO, TOPO_DIREITA], [MEIO_ESQUERDA, CENTRO,
             MEIO_DIREITA], [FUNDO_ESQUERDA, FUNDO_CENTRO, FUNDO_DIREITA]]
+ORDERED_KEYS = [['Coycol', 'Cauha', 'Tetlah'],
+                ['Huatlya', 'Zitllo', 'Micpe'],
+                ['Nenea', 'Cahuitz', 'Pallotl']]
+
+
+def desafio3(mmap):
+    marray = []
+    for line in ORDERED_KEYS:
+        mline = []
+        for key in line:
+            mline.append(mmap[key])
+        marray.append(mline)
+    desafio0(marray)
 
 
 def main(_=None):
+    from browser import doc
+    doc["pydiv"].html = ""
     Masmorra()
-DES = [main, desafio0, desafio0]
+
+
+DES = [main, desafio0, desafio0, desafio3]
 
 
 def posiciona_monstro(m, x, y):
@@ -252,3 +270,278 @@ Na verdade vamos usar o Brython que é o Python que funciona dentro de um navega
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
     </div>
 '''
+PAGE = [""]*10
+
+PAGE[0] = '''
+  <div class="section" id="bem-vindos-ao-circo-voador-da-programacao-python">
+<h1>Bem Vindos ao Circo Voador da Programação Python<a class="headerlink" href="#bem-vindos-ao-circo-voador-da-programacao-python" title="Permalink to this headline">¶</a></h1>
+<p>Aqui vamos ter uma introdução rápida de como programar jogos para Web usando Python.
+Na verdade vamos usar o Brython que é o Python que funciona dentro de um navegador web como o Firefox.</p>
+<img alt="http://s19.postimg.org/ufgi8eztf/PPFC.jpg" src="http://s19.postimg.org/ufgi8eztf/PPFC.jpg" />
+</div>
+<div class="section" id="sumario">
+<h1>Sumário<a class="headerlink" href="#sumario" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="inicia.html">Primeiro Cenário do Jogo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="desafio_a.html">Criando uma Câmara com Constantes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="desafio_b.html">Posicionando um Personagem com Inteiros</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="indices-e-tabelas">
+<h1>Indices e Tabelas<a class="headerlink" href="#indices-e-tabelas" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><em>Index</em></a></li>
+<li><a class="reference internal" href="py-modindex.html"><em>Module Index</em></a></li>
+<li><a class="reference internal" href="search.html"><em>Search Page</em></a></li>
+</ul>
+</div>
+          </div>
+        </div>
+      </div>
+    <div class="footer">
+        &copy; Copyright 2016, Carlo E. T. Oliveira.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+'''
+PAGE[1] ="""
+  <div class="section" id="criando-uma-camara-com-constantes">
+<span id="desafio-a"></span><h1>Criando uma Câmara com Constantes<a class="headerlink" href="#criando-uma-camara-com-constantes" title="Permalink to this headline">¶</a></h1>
+<p>Uma constante é um valor que não se modifica ao longo de um programa.
+Em Python a constante é escrita com todas as letras maiúsculas como no nome TOPO_ESQUERDA abaixo.</p>
+<p>Use os ladrilhos nomeados de A a L para montar a câmara mostrada à direita.</p>
+<img alt="_images/desafio_a.png" src="http://s19.postimg.org/del9469xv/desafio_a.png" />
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">circus.circus</span> <span class="kn">import</span> <span class="n">circus</span>
+
+<span class="n">TOPO_ESQUERDA</span> <span class="o">=</span> <span class="s">&quot;AN&quot;</span>
+<span class="n">TOPO_DIREITA</span> <span class="o">=</span> <span class="s">&quot;AN&quot;</span>
+<span class="n">TOPO_CENTRO</span> <span class="o">=</span> <span class="s">&quot;AN&quot;</span>
+<span class="n">MEIO_ESQUERDA</span><span class="p">,</span> <span class="n">CENTRO</span><span class="p">,</span> <span class="n">MEIO_DIREITA</span> <span class="o">=</span> <span class="s">&quot;AN&quot;</span><span class="p">,</span> <span class="s">&quot;AN&quot;</span><span class="p">,</span> <span class="s">&quot;AN&quot;</span>
+<span class="n">FUNDO_ESQUERDA</span><span class="p">,</span> <span class="n">FUNDO_CENTRO</span><span class="p">,</span> <span class="n">FUNDO_DIREITA</span> <span class="o">=</span>  <span class="s">&quot;AN&quot;</span><span class="p">,</span> <span class="s">&quot;AN&quot;</span><span class="p">,</span> <span class="s">&quot;AN&quot;</span>
+
+<span class="c"># O comando abaixo voce vai entender no próximo desafio</span>
+<span class="n">circus</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">[[</span><span class="n">TOPO_ESQUERDA</span><span class="p">,</span> <span class="n">TOPO_CENTRO</span><span class="p">,</span> <span class="n">TOPO_DIREITA</span><span class="p">],</span> <span class="p">[</span><span class="n">MEIO_ESQUERDA</span><span class="p">,</span> <span class="n">CENTRO</span><span class="p">,</span>
+        <span class="n">MEIO_DIREITA</span><span class="p">],</span> <span class="p">[</span><span class="n">FUNDO_ESQUERDA</span><span class="p">,</span> <span class="n">FUNDO_CENTRO</span><span class="p">,</span> <span class="n">FUNDO_DIREITA</span><span class="p">]])</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">No texto &#8220;AN&#8221; a primeira letra determina o ladriho e a segunda se está girada para Norte, Leste, Sul ou Oeste.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+"""
+PAGE[2] ="""
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="desafio_c.html" title="Posicionando um Personagem com Inteiros"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="desafio_a.html" title="Criando uma Câmara com Constantes"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Flying Circus 0.1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="criando-uma-camara-com-listas">
+<span id="desafio-b"></span><h1>Criando uma Câmara com Listas<a class="headerlink" href="#criando-uma-camara-com-listas" title="Permalink to this headline">¶</a></h1>
+<p>Uma lista é um conjunto de coisas, pode ser um conjunto de números, letras, palavras ou qualquer outro objeto.
+Em Python a lista é escrita assim: <em>[&lt;uma coisa&gt;, &lt;outra coisa&gt;]</em>.</p>
+<p>Use os ladrilhos nomeados de A a L para montar a câmara mostrada abaixo, consulte o exercício anterior.</p>
+<img alt="_images/masmorra.jpg" src="_images/masmorra.jpg" />
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">circus.circus</span> <span class="kn">import</span> <span class="n">circus</span>
+
+<span class="n">MASMORRA</span> <span class="o">=</span> <span class="p">[[</span> <span class="s">&quot;AN&quot;</span><span class="p">,</span> <span class="s">&quot;AN&quot;</span><span class="p">,</span> <span class="s">&quot;AN&quot;</span><span class="p">,</span> <span class="s">&quot;AN&quot;</span><span class="p">,</span> <span class="s">&quot;AN&quot;</span><span class="p">,</span> <span class="s">&quot;AN&quot;</span><span class="p">],</span>
+            <span class="p">[</span> <span class="s">&quot;AN&quot;</span><span class="p">,</span> <span class="s">&quot;AN&quot;</span><span class="p">,</span> <span class="s">&quot;AN&quot;</span><span class="p">,</span> <span class="s">&quot;AN&quot;</span><span class="p">,</span> <span class="s">&quot;AN&quot;</span><span class="p">,</span> <span class="s">&quot;AN&quot;</span><span class="p">],</span>
+            <span class="p">[</span> <span class="s">&quot;AN&quot;</span><span class="p">,</span> <span class="s">&quot;AN&quot;</span><span class="p">,</span> <span class="s">&quot;AN&quot;</span><span class="p">,</span> <span class="s">&quot;AN&quot;</span><span class="p">,</span> <span class="s">&quot;AN&quot;</span><span class="p">,</span> <span class="s">&quot;AN&quot;</span><span class="p">],</span>
+            <span class="p">[</span> <span class="s">&quot;AN&quot;</span><span class="p">,</span> <span class="s">&quot;AN&quot;</span><span class="p">,</span> <span class="s">&quot;AN&quot;</span><span class="p">,</span> <span class="s">&quot;AN&quot;</span><span class="p">,</span> <span class="s">&quot;AN&quot;</span><span class="p">,</span> <span class="s">&quot;AN&quot;</span><span class="p">],</span>
+            <span class="p">[</span> <span class="s">&quot;AN&quot;</span><span class="p">,</span> <span class="s">&quot;AN&quot;</span><span class="p">,</span> <span class="s">&quot;AN&quot;</span><span class="p">,</span> <span class="s">&quot;AN&quot;</span><span class="p">,</span> <span class="s">&quot;AN&quot;</span><span class="p">,</span> <span class="s">&quot;AN&quot;</span><span class="p">]</span>
+            <span class="p">]</span>
+
+<span class="n">circus</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">MASMORRA</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">No texto &#8220;AN&#8221; a primeira letra determina o ladriho e a segunda se está girada para Norte, Leste, Sul ou Oeste.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="desafio_a.html"
+                        title="previous chapter">Criando uma Câmara com Constantes</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="desafio_c.html"
+                        title="next chapter">Posicionando um Personagem com Inteiros</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/desafio_b.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="desafio_c.html" title="Posicionando um Personagem com Inteiros"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="desafio_a.html" title="Criando uma Câmara com Constantes"
+             >previous</a> |</li>
+        <li><a href="index.html">Flying Circus 0.1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2016, Carlo E. T. Oliveira.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+"""
+PAGE1 ="""
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="desafio_g.html" title="Dar Nomes para os Monstros com string"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="desafio_e.html" title="Matar o monstro com if"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Flying Circus 0.1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="criando-varios-monstros">
+<span id="desafio-f"></span><h1>Criando Vários Monstros<a class="headerlink" href="#criando-varios-monstros" title="Permalink to this headline">¶</a></h1>
+<p>O comando <em>for</em> caminha em uma lista e executa o conjunto de comandos indicado para cada elemento.
+Em Python o for é escrito assim: <em>for &lt;elemento&gt; in &lt;lista&gt;:</em>.
+Se cada elemento da lista for outra lista, você pode colocar vários elementos separados por vírgualas, veja:</p>
+<p><em>for &lt;elemento0&gt;, &lt;elemento1&gt; in &lt;lista com listas&gt;:</em></p>
+<dl class="docutils">
+<dt>Complete a lista de elementos com coordenadas para diversos monstros</dt>
+<dd>e chame a função <em>posiciona_monstro()</em> para cada um deles.</dd>
+</dl>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">circus.circus</span> <span class="kn">import</span> <span class="n">posiciona_monstro</span>
+
+<span class="c"># lista_de_posições = [(0, 0, 0), (&lt;&gt;), &lt;&gt;]</span>
+
+<span class="c"># for &lt;&gt; :</span>
+<span class="c">#     &lt;&gt;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Na tripla ordenada (0, 1, 2) o 0 serve para usar a figura de monstro 0, o 1 para colocar o monstro na posição x=1 e o 2 na posição y=2.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="desafio_e.html"
+                        title="previous chapter">Matar o monstro com if</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="desafio_g.html"
+                        title="next chapter">Dar Nomes para os Monstros com string</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/desafio_f.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="desafio_g.html" title="Dar Nomes para os Monstros com string"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="desafio_e.html" title="Matar o monstro com if"
+             >previous</a> |</li>
+        <li><a href="index.html">Flying Circus 0.1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2016, Carlo E. T. Oliveira.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+"""
+PAGE1 ="""
+"""
+
+
+def desafio(desafio=1):
+    from browser import doc
+    doc["pydiv"].html = PAGE[desafio]

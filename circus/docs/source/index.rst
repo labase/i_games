@@ -21,6 +21,7 @@ Sumário
     inicia.rst
     desafio_a.rst
     desafio_b.rst
+    desafio_h.rst
     desafio_c.rst
     desafio_d.rst
     desafio_e.rst
