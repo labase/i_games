@@ -8,12 +8,8 @@
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/phaser/2.4.7/phaser.min.js"></script>
         <script type="text/javascript" src="https://cdn.rawgit.com/brython-dev/brython/3.2.6/www/src/brython.js"></script>
         <script type="text/python">
-            """
-            from circus.desafio_a import main
-            from braser import Braser
-            main(Braser)
-            """
-            import circus.main
+            import circus.circus as go
+            go.circus(4)
         </script>
     </head>
     <body onLoad="brython(1, {static_stdlib_import: true, pypath: ['.']})" class="main">

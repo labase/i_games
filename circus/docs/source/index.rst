@@ -22,11 +22,9 @@ Sumário
     desafio_a.rst
     desafio_b.rst
     desafio_h.rst
-    desafio_c.rst
-    desafio_d.rst
-    desafio_e.rst
-    desafio_f.rst
-    desafio_g.rst
+    desafio_i.rst
+    desafio_j.rst
+    desafio_k.rst
 
 Indices e Tabelas
 =================

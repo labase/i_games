@@ -1,4 +1,4 @@
-from random import random
+from random import random, shuffle
 from braser import Braser
 # noinspection PyUnresolvedReferences
 from circus.desafio_a import main as desafio0
@@ -199,6 +199,14 @@ MASMORRA = [[TOPO_ESQUERDA, TOPO_CENTRO, TOPO_DIREITA], [MEIO_ESQUERDA, CENTRO,
 ORDERED_KEYS = [['Coycol', 'Cauha', 'Tetlah'],
                 ['Huatlya', 'Zitllo', 'Micpe'],
                 ['Nenea', 'Cahuitz', 'Pallotl']]
+PLAIN_KEYS = ['Coycol', 'Cauha', 'Tetlah'] +\
+                ['Huatlya', 'Zitllo', 'Micpe'] +\
+                ['Nenea', 'Cahuitz', 'Pallotl']
+SHUFFLE_KEYS = PLAIN_KEYS[:]
+shuffle(SHUFFLE_KEYS)
+SHUFFLE_DIRS = list("NLSO")
+DIRS = list("NLSO")
+shuffle(SHUFFLE_DIRS)
 
 
 def desafio3(mmap):
@@ -211,13 +219,55 @@ def desafio3(mmap):
     desafio0(marray)
 
 
+def desafio4(mmap):
+    marray = []
+    keys = [SHUFFLE_KEYS[cel:cel+3] for cel in range(9)[::3]]
+    for line in keys:
+        mline = []
+        for key in line:
+            mline.append(mmap[key])
+        marray.append(mline)
+    desafio0(marray)
+    shuffle(SHUFFLE_KEYS)
+
+
+def desafio6(mmap):
+    marray = []
+    keys = [SHUFFLE_KEYS[cel:cel+3] for cel in range(9)[::3]]
+    for line in keys:
+        mline = []
+        for key in line:
+            code = mmap[key]
+            rotate = (SHUFFLE_KEYS.index(key) + SHUFFLE_DIRS.index(code[1])) % 4
+            mline.append(code[0] + DIRS[rotate])
+        marray.append(mline)
+    desafio0(marray)
+    shuffle(SHUFFLE_KEYS)
+    shuffle(SHUFFLE_DIRS)
+
+
+def desafio5(mmap):
+    marray = []
+    keys = [SHUFFLE_KEYS[cel:cel+3] for cel in range(9)[::3]]
+    print(keys)
+    for line in keys:
+        mline = []
+        for key in line:
+            code = mmap[key]
+            mline.append(code[0] + DIRS[SHUFFLE_DIRS.index(code[1])])
+        marray.append(mline)
+    desafio0(marray)
+    shuffle(SHUFFLE_KEYS)
+    shuffle(SHUFFLE_DIRS)
+
+
 def main(_=None):
     from browser import doc
     doc["pydiv"].html = ""
     Masmorra()
 
 
-DES = [main, desafio0, desafio0, desafio3]
+DES = [main, desafio0, desafio0, desafio3, desafio4, desafio5, desafio6]
 
 
 def posiciona_monstro(m, x, y):
@@ -226,8 +276,9 @@ def posiciona_monstro(m, x, y):
 
 
 def circus(desafio=1, param=MASMORRA):
-    from browser import doc
-    # doc["pydiv"].html = PAGE0
+    # desafio6({'Coycol':'AN', 'Cauha':'BN', 'Tetlah':'CN',
+    #              'Huatlya':'DN', 'Zitllo':'EN', 'Micpe':'FN',
+    #              'Nenea':'GN', 'Cahuitz':'HN', 'Pallotl':'IN'})
     DES[desafio](param)
 
 print(__name__)
