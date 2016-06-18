@@ -25,6 +25,15 @@ Sumário
     desafio_i.rst
     desafio_j.rst
     desafio_k.rst
+    jogo_a.rst
+    jogo_b.rst
+    jogo_c.rst
+    jogo_d.rst
+    jogo_e.rst
+    jogo_f.rst
+    jogo_g.rst
+    jogo_h.rst
+    jogo_i.rst
 
 Indices e Tabelas
 =================
