@@ -4,7 +4,7 @@
 Colocando Personagens
 =====================
 
-Vamos criar um outra classe para um personagem monstro.
+Vamos criar uma outra classe para um personagem monstro.
 O monstro vai ser criado na invocação *__init__* do Jogo. Use a folha de ladrilhos para programar os monstros:
 
 
