@@ -12,8 +12,10 @@ Vamos movimentar monstros. Para isso é preciso acrescentar a função update na
 .. code-block:: python
 
    from _spy.circus.game import Circus, Actor
-
-   MONSTROS = [(0, 0, 0), (0, 0, 0), (0, 0, 0)]
+   from random import random
+   
+   MONSTROS = [(100, 100, 100), (0, 200, 100), (50, 300, 100)]
+   DIR = [(1,0), (1,1), (0,1), (-1,1), (-1,0), (-1,-1), (0,-1), (1,-1)]
 
 
    class Jogo(Circus):
@@ -44,7 +46,7 @@ Vamos movimentar monstros. Para isso é preciso acrescentar a função update na
         def create(self):
             """Aqui colocamos o sprite do monstro e selecionamos o frame que o representa"""
             self.monstro = "<troque isto pela criação do sprite, use self.nome, self.x e self.y>"
-            "escolha aqui o frame e use self.frame"
+            "bote aqui self.??o que??".frame = self.frame
             self.monstro.anchor.setTo(0.5, 0.5)
             "ponha aqui a animação"
             self.enable(self.monstro)
